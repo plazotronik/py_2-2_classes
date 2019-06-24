@@ -50,7 +50,8 @@ class farm_animals:
     def feeding_medium(self):
         self.satiety = 'medium'
         self.weight = self.weight * 1.13
-        print(f'Животное типа "{self.type_}" по имени {self.name.capitalize()} покормили в меру. Не забудьте покормить позже.')
+        print(f'Животное типа "{self.type_}" по имени {self.name.capitalize()} покормили в меру. '
+              f'Не забудьте покормить позже.')
 
     def time(self, hours):
         """
@@ -95,6 +96,14 @@ class farm_animals:
         print(f'{self.type_.capitalize()} {self.name.capitalize()} говорит тебе {self.voice.upper()}!!!')
 
     def get(self, numb):
+        """
+        вот тут хотелось бы услышать мнение проверяющего - верно ли так делать как я здесь?
+        задавать подобные условия в родительском классе (упоминая дочерние классы)?
+        не вернее ли указать это отдельно в каждом  дочернем классе?...
+
+        :param numb:
+        :return:
+        """
         self.return_animal_num += numb
         if isinstance(self, birds):
             print(f'{self.type_.capitalize()} по имени {self.name.capitalize()} дал(а) {self.return_animal_num} шт. '
@@ -108,6 +117,9 @@ class farm_animals:
         elif isinstance(self, sheep):
             print(f'{self.type_.capitalize()} по имени {self.name.capitalize()} дал(а) {self.return_animal_num} кг '
                   f'{self.return_animal.replace("ть", "ти")}')
+        else:
+            print(f'{self.type_.capitalize()} по имени {self.name.capitalize()} дал(а) {self.return_animal_num} '
+                  f'единиц типа {self.return_animal}')
 
 class horns_hoofs(farm_animals):
     # def __init__(self):
@@ -194,6 +206,7 @@ chicken_2.name = 'Кукареку'
 duck_1 = duck()
 duck_1.name = 'Кряква'
 
+
 cow_1.get(12)
 sheep_1.get(7)
 sheep_2.get(10)
@@ -205,17 +218,37 @@ chicken_1.get(2)
 chicken_2.get(1)
 duck_1.get(2)
 
+# визуальный разделитель
+print('\n=====================================\n')
 
-# print(sheep_1 == type(sheep))
-# print(sheep_1)
-# print(type(sheep_1))
-# print(horns_hoofs)
-# print(type(horns_hoofs))
+cow_1.touch()
+sheep_1.touch()
+sheep_2.touch()
+goat_1.touch()
+goat_2.touch()
+goose_1.touch()
+goose_2.touch()
+chicken_1.touch()
+chicken_2.touch()
+duck_1.touch()
 
-print(sheep_2.weight)
+# визуальный разделитель
+print('\n=====================================\n')
 
+animals = [sheep_1, sheep_2, goat_1, goat_2, cow_1, goose_1, goose_2, chicken_1, chicken_2, duck_1]
 
-animals = [cow_1, sheep_1, sheep_2, goat_1, goat_2, goose_1, goose_2, chicken_1, chicken_2, duck_1]
-
+weight_0 = 0
 for animal in animals:
-    pass
+    weight_0 += animal.weight
+print(f'Общий вес всех животных равен {weight_0} кг')
+
+weight_1 = 0
+name_1 = ''
+type_1 = ''
+for animal in animals:
+    if weight_1 < animal.weight:
+        weight_1 = animal.weight
+        type_1 = animal.type_
+        name_1 = animal.name
+        continue
+print('\nСамое тяжелое животное {} по имени {} c весом {} кг'.format(type_1, name_1, weight_1))
